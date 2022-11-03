@@ -1,16 +1,16 @@
 Clone o projeto localmente:
 ```cmd
-git clone https://github.com/Fightnize/site
+git clone https://github.com/Nykcolas/meu_gestor_app.git
 ```
 
 Acesse a pasta do projeto:
 ```cmd
-cd Fightnize/site
+cd meu_gestor_app
 ```
 
-Acesse a pasta do app
+instale o composer no projeto
 ```cmd
-cd app
+composer install
 ```
 
 Instale as dependências
@@ -20,5 +20,5 @@ npm install
 
 Instale as dependências
 ```cmd
-npm run dev
+npm run watch
 ```

@@ -1,7 +1,7 @@
 <template>
     <div :class="divClasse + comprimento">
         <label v-if="label" :class="labelClasse" :for="name">{{label}}</label>
-        <input :type="type" :name="name" @input="$emit('input', $event)" :class="classe" v-maska="formato" v-bind="$attrs" :value="value" :id="name" :placeholder="placeholderInput">
+        <input :type="tipo" :name="name" @input="$emit('input', $event)" :class="classe" v-maska="formato" v-bind="$attrs" :value="value" :id="name" :placeholder="placeholderInput">
     </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
     ],
     data() {
         return {
+            tipo: this.type ?? 'text',
             classe: this.classInput ?? this.type == 'checkbox' ? "form-check-input" : "form-control form-control-sm",
             placeholderInput: this.placeholder ?? " ",
             labelClasse: this.labelClass ?? (this.type == 'checkbox' ? "form-check-label" : "col-md-12 col-form-label"),
