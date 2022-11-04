@@ -29,12 +29,9 @@ export default {
         FormataValor(val) {
             if (val) {
                 if (!isNaN(val.toString().substr(0, 1)) && val.toString().indexOf("-") !== -1) {
-                    /*Esse bloco Formata as Datas*/
                     val = val.split('-').reverse().join('/');
                 }
                 if (!isNaN(val.toString().substr(0, 1)) && val.toString().indexOf(".") !== -1) {
-                    /*Esse bloco Formata as Moeda*/
-
                     val.trim()
                     val = parseFloat(val).toLocaleString('pt-BR', {
                         style: "currency",

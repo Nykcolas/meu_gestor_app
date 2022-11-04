@@ -43,7 +43,6 @@ export default {
                         titulo: response.statusText,
                         mensagem: {success: [response.data.message]}
                     }     
-                    console.log(this.mensagemDados);
                 } else {
                     document.location.reload();
                 }
@@ -53,8 +52,6 @@ export default {
                     titulo: errors.response.statusText,
                     mensagem: errors.response.data.errors
                 }  
-                console.log(this.mensagemDados)
-
             });
         },
         GetDadosRota: async function(id = null, urlNew = null) {

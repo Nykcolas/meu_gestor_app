@@ -35,6 +35,7 @@ Vue.component('Login', require('./components/app/Login.vue').default);
 Vue.component('Registrar', require('./components/app/Registrar.vue').default);
 Vue.component('Email', require('./components/app/Email.vue').default);
 Vue.component('Home', require('./components/app/Home.vue').default);
+Vue.component('Redefinirsenha', require('./components/app/RedefinirSenha.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -44,7 +44,6 @@
 </template>
 <script>
 import crud from '../../crud';
-// import for from '../functions';
 export default {
 
     props: ["data", "colums", 'permissoes'],
