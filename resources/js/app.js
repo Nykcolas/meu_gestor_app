@@ -33,6 +33,7 @@ Vue.component('modalComponent', require('./components/elements/Modal.vue').defau
 Vue.component('Contas', require('./components/app/Contas.vue').default);
 Vue.component('Login', require('./components/app/Login.vue').default);
 Vue.component('Registrar', require('./components/app/Registrar.vue').default);
+Vue.component('Email', require('./components/app/Email.vue').default);
 Vue.component('Home', require('./components/app/Home.vue').default);
 
 /**

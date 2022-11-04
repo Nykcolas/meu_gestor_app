@@ -36,13 +36,25 @@ export default {
                 if (response.token) {
                     document.cookie = 'token='+response.token+';SameSite=Lax'
                 }
-                document.location.reload();
+
+                if (response.data.message) {
+                    this.detalheStatus = 'success';
+                    this.mensagemDados = {
+                        titulo: response.statusText,
+                        mensagem: {success: [response.data.message]}
+                    }     
+                    console.log(this.mensagemDados);
+                } else {
+                    document.location.reload();
+                }
             }).catch(errors => {
                 this.detalheStatus = 'danger';
                 this.mensagemDados = {
                     titulo: errors.response.statusText,
                     mensagem: errors.response.data.errors
-                }     
+                }  
+                console.log(this.mensagemDados)
+
             });
         },
         GetDadosRota: async function(id = null, urlNew = null) {

@@ -18,7 +18,7 @@
             <div class="content-crud">
                 <transition name="toggle">
                     <div class="form" v-show="acaoAtual != 'T' && acaoAtual != ''">
-                        <form method="post" id="FormSubmit" @submit.prevent="Create(GetUrl(api), $event)">
+                        <form method="post" id="FormSubmit" @submit.prevent="Create(url || GetUrl(api), $event)">
                             <transition name="slide">
                                 <alertComponent :Type="detalheStatus" :titulo="mensagemDados.titulo" :mensagem="mensagemDados" v-if="detalheStatus != ''"></alertComponent>
                             </transition>
@@ -52,14 +52,14 @@
 <script>
 import crud from '../../crud';
 export default {
-    props: ["titulo", "api", "comprimento", "token", "labelButton", "permissao", "tipoAcao", "colums"],
+    props: ["titulo", "api", "url", "comprimento", "token", "labelButton", "permissao", "tipoAcao", "colums"],
     data() {
         return {
             detalheStatus: '',
             mensagemDados: {},
             permissoes: {},
             arrDadosRota: {},
-            acaoAtual: ""
+            acaoAtual: "",
         }
     },
     methods: {
@@ -83,7 +83,9 @@ export default {
     mounted() {
         this.GetAcaoAtual(this.tipoAcao ?? "T");
         this.ValidaPermissao()
-        this.GetDadosRota(null, this.GetUrl(this.api))
+        if ((this.tipoAcao || "T") === "T") {
+            this.GetDadosRota(null, this.url ?? this.GetUrl(this.api))
+        }
     },
     mixins: [crud]
 
@@ -95,11 +97,6 @@ export default {
         position: relative;
         padding-right: 10px;
     }
-/* 
-    .content-crud .form {
-        position: absolute;
-        width: 99%;
-    } */
 
     .toggle-enter-active {
         animation: toggle-in ease-in-out 1300ms;
