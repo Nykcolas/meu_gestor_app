@@ -16,9 +16,10 @@
         </template>
         <template v-slot:body>
             <div class="content-crud">
+                <!-- Formulário -->
                 <transition name="toggle">
                     <div class="form" v-show="acaoAtual != 'T' && acaoAtual != ''">
-                        <form method="post" id="FormSubmit" @submit.prevent="Create(url || GetUrl(api), $event)">
+                        <form method="post" id="FormSubmit" @submit.prevent="EmitSubmit(), Create(url || GetUrl(api), $event)">
                             <transition name="slide">
                                 <alertComponent :Type="detalheStatus" :titulo="mensagemDados.titulo" :mensagem="mensagemDados" v-if="detalheStatus != ''"></alertComponent>
                             </transition>
@@ -36,15 +37,25 @@
                         </form>
                     </div>
                 </transition>
+                <!-- Formulário -->
+                <!-- Table  -->
                 <transition name="toggle">
                     <div class="table" v-if="acaoAtual == 'T'">
                         <tableComponent @EmitEventoForm="GetAcaoAtual" :permissoes="permissoes" :colums="colums" :data="arrDadosRota">
                             <template v-slot:paginas>
                                 <li  v-for="(item, index) in arrDadosRota.links" :key="index" :class="item.active?'page-item active':'page-item'"><a @click="AjustaPaginacao(item)" class="page-link" v-html="item.label"></a></li>
                             </template>
+                            <template v-slot:action-table="{id}">
+                                <slot name="actiontable" :id="id"></slot>
+                            </template>
                         </tableComponent>
                     </div>
                 </transition>
+                <!-- Table  -->
+                <!-- Modal  -->
+                <slot name="modal"></slot>
+                <!-- Modal  -->
+
             </div>
         </template>
     </containerComponent>
@@ -63,6 +74,9 @@ export default {
         }
     },
     methods: {
+        EmitSubmit() {
+            this.$emit("Submit");
+        },
         AjustaPaginacao(dadosPaginacao) {
             if (dadosPaginacao.url) {
                 this.GetDadosRota(null, dadosPaginacao.url);
@@ -87,9 +101,7 @@ export default {
             this.GetDadosRota(null, this.url ?? this.GetUrl(this.api))
         }
     },
-    mixins: [crud]
-
-
+    mixins: [crud],
 }
 </script>
 <style>

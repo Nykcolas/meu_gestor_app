@@ -32,27 +32,34 @@ export default {
                 }
             }
             
-            axios.post(url, formData, config).then(response => {
+            let ax = null;
+            await axios.post(url, formData, config).then(response => {
                 if (response.token) {
                     document.cookie = 'token='+response.token+';SameSite=Lax'
                 }
 
-                if (response.data.message) {
-                    this.detalheStatus = 'success';
-                    this.mensagemDados = {
-                        titulo: response.statusText,
-                        mensagem: {success: [response.data.message]}
-                    }     
-                } else {
-                    document.location.reload();
+                if (!this._events.Finaly) {
+                    if (response.data.message) {
+                        Vue.swal(response.statusText, response.data.message, 'success').then(function(confirm) {
+                            if (confirm.isConfirmed) {
+                                location.reload();
+                            }
+                        })
+                    } else {
+                        document.location.reload();
+                    }
                 }
+                ax = response;
             }).catch(errors => {
                 this.detalheStatus = 'danger';
                 this.mensagemDados = {
-                    titulo: errors.response.statusText,
+                    titulo: this.TraduzHTTPCode(errors.response.status),
                     mensagem: errors.response.data.errors
-                }  
-            });
+                }
+                
+                ax = errors;
+            }).finally(() => this.$emit('Finaly', ax));
+            
         },
         GetDadosRota: async function(id = null, urlNew = null) {
             const config = {
@@ -119,7 +126,9 @@ export default {
                 this.acao = acao;
             } else {
                 this.acao = "T";
+                this.detalheStatus = "";
             }
+            
             this.AjustaCamposAcao();
         
             return this.acao;

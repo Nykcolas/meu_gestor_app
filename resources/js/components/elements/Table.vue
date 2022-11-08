@@ -24,6 +24,7 @@
                                 <buttonComponent v-if="permissoes.u" label="Atualizar" type="primary" @click="EmitEventoForm('U'), Update(arr['id'])"></buttonComponent>
                                 <buttonComponent v-if="permissoes.r" label="Vizualizar" type="warning" @click="EmitEventoForm('R'), Read(arr['id'])"></buttonComponent>
                                 <buttonComponent v-if="permissoes.d" label="Deletar" type="danger" @click="Delete(arr['id'])"></buttonComponent>
+                                <slot name="action-table" :id="arr['id']"></slot>
                             </div>
                         </td>
                     </tr>
@@ -94,7 +95,6 @@ export default {
             if(this.data.data){
                 for (const colum in this.colums) {
                     if(colum.indexOf("nome") !== -1){
-                        console.log(this.data.data);
                         data = this.data.data.filter(Lista => {
                             if(Lista[colum]){
                                 if (Lista[colum].toString().toLowerCase().indexOf(this.pesquisa.toLowerCase()) !== -1) {

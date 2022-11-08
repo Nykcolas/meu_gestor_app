@@ -10919,3 +10919,13 @@ textarea.form-control-lg {
 #footer {
   height: 55px;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+  background: #212529;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #525252;
+  border-radius: 5px;
+}

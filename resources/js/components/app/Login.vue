@@ -3,7 +3,7 @@
         <template v-slot:form>
             <inputComponent largura="12" label="Endereço E-mail" name="email" type="email"></inputComponent>
             <inputComponent largura="12" label="Senha" name="password" type="password"></inputComponent>
-            <inputComponent class="ms-3" label="Mantenha-me Conectado" name="remember" type="checkbox"></inputComponent>
+            <inputComponent class="ms-3" label="Mantenha-me Conectado" value="1" name="remember" type="checkbox"></inputComponent>
             <a class="btn mb-3 btn-link col-auto" href="password/reset">Esqueci a Senha</a>
         </template>
     </formComponent>
