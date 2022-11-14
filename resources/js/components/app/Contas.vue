@@ -16,11 +16,10 @@ export default {
         return {
             colums: {
                 nome_conta:'Contas',
-                valor_pago_mensal:'Valor por mês', 
-                data_inicio_conta:'Iniciou os pagamentos', 
+                valor_pago_mensal:'Valor por mês',
+                data_inicio_conta:'Iniciou os pagamentos',
                 dia_vencimento:'Dia do Vencimento'
             },
-            dados: {}
         }
     },
 }

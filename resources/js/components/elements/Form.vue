@@ -55,7 +55,6 @@
                 <!-- Modal  -->
                 <slot name="modal"></slot>
                 <!-- Modal  -->
-
             </div>
         </template>
     </containerComponent>
@@ -159,5 +158,4 @@ export default {
             opacity: 0;
         }
     }
-
 </style>

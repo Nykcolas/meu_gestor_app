@@ -27,7 +27,6 @@ class FormRepository extends Controller
     {
         $pagination = $this->pagination ?? 5;
         return response()->json($this->model->paginate($pagination), 200);
-
     }
 
     public function show($id)
