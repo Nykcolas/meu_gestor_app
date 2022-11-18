@@ -2,11 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Repository\FormModelRepository;
 
-class Contas extends Model
-{
-    use HasFactory;
-    protected $fillable = ['nome_conta', 'valor_pago_mensal', 'data_inicio_conta', 'dia_vencimento'];
-}
+class Contas extends FormModelRepository
+{}

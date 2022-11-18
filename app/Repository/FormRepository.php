@@ -10,16 +10,37 @@ class FormRepository extends Controller
     protected $storeRequest;
     protected $updateRequest;
     protected $model;
-    public $pagination;
+    protected $nomeClass;
+    protected $pagination;
+    protected $arrayFillable;
 
-    public function __construct($storeRequest, $model, $updateRequest)
+    public function __construct($nomeClass)
     {
-        $this->storeRequest = $storeRequest;
-        $this->updateRequest = $updateRequest;
-        $this->model = $model;
+        $this->nomeClass = ucfirst($nomeClass);
+        $this->SetFormModel();
+        $this->SetFormUpdateRequest();
+        $this->SetFormStoreRequest();
     }
 
-    public function SetPagination($nrPaginas) {
+    protected function SetFormModel() {
+        $model = "App\\Models\\".$this->nomeClass;
+        $this->model = new $model();
+    }
+
+    protected function SetFormUpdateRequest()
+    {
+        $updateRequest = "App\\Http\\Requests\\Update".$this->nomeClass."Request";
+        $this->updateRequest = new $updateRequest();
+    }
+
+    protected function SetFormStoreRequest()
+    {
+        $storeRequest = "App\\Http\\Requests\\Store".$this->nomeClass."Request";
+        $this->storeRequest = new $storeRequest();
+    }
+
+    public function SetPagination($nrPaginas)
+    {
         $this->pagination = $nrPaginas;
     }
 

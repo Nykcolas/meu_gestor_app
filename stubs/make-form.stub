@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repository\FormRepository;
 
-class ContasController extends FormRepository
+class {{ class }} extends FormRepository
 {
     public function __construct()
     {
