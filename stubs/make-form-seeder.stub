@@ -1,0 +1,21 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+
+class {{classSeeder}}Seeder extends Seeder
+{
+    /**
+     * Em caso de numero de registros a cima de
+     * 1000 descomentar a linha do 'ini_set' !
+     *---------------------------------------------------------
+     * Comando artisn para executar essa Seeder é:
+     * php artisn db:seed --class={{classSeeder}}Seeder
+     */
+    public function run()
+    {
+        //ini_set('memory_limit', '510'); 
+        // \App\Models\{{classSeeder}}::factory(10)->create();
+    }
+}

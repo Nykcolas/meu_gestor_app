@@ -1,0 +1,18 @@
+<template>
+    <formComponent :token="token" :colums="colums" comprimento="12" titulo="{{classVue}}">
+        <template v-slot:form>
+            <!-- <inputComponent label="Dia do Vencimento" name="dia_vencimento" maxlength="2" mascara="inteiro"></inputComponent> -->
+        </template>
+    </formComponent>
+</template>
+
+<script>
+export default {
+    props: ['token'],
+    data() {
+        return {
+            colums: {},
+        }
+    },
+}
+</script>

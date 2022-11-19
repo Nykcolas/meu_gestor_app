@@ -1,0 +1,4 @@
+@extends('layouts.app')
+@section('content')
+    <{{classView}} token="{{ csrf_token() }}"></{{classView}}>
+@endsection

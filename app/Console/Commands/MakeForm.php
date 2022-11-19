@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\GeneratorCommand;
+use Illuminate\Support\Str;
 
 class MakeForm extends GeneratorCommand
 {
@@ -32,26 +33,30 @@ class MakeForm extends GeneratorCommand
 
     protected function replaceClass($stub, $name)
     {
-        $stub = parent::replaceClass($stub, $name);
-        return str_replace('FormControllerGeneric', ucfirst($this->argument('name'))."Controller", $stub);
+        $stub = $this->replaceClassItems($stub);
+        $stub = str_replace('{{ classController }}', ucfirst($this->argument('name'))."Controller", $stub);
+        return $stub;
     }
+
+    protected function replaceClassItems($stub) {
+        return str_replace('{{nomeClass}}', ucfirst($this->argument('name')), $stub);
+    }
+
 
     protected function getStub()
     {
-      return  'stubs/make-form.stub';
+        return  'stubs/make-form.stub';
+    }
+
+    protected function getPath($name)
+    {
+        $name = str_replace($this->argument('name'), ucfirst($this->argument('name'))."Controller", $name);
+        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
+        return $this->laravel['path'].'/'.str_replace('\\', '/', $name).'.php';
     }
 
     protected function getDefaultNamespace($rootNamespace)
     {
       return $rootNamespace . '\Http\Controllers';
     }
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
-    // public function handle()
-    // {
-    //     echo "chegou";
-    // }
 }

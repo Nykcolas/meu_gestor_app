@@ -1,4 +1,4 @@
 @extends('layouts.app')
 @section('content')
-    <contas token="{{ csrf_token() }}"></contas>
+    <Contas token="{{ csrf_token() }}"></Contas>
 @endsection

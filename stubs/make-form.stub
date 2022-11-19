@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Repository\FormRepository;
 
-class {{ class }} extends FormRepository
+class {{ classController }} extends FormRepository
 {
     public function __construct()
     {
-        parent::__construct("Contas");
+        parent::__construct("{{nomeClass}}");
     }
 }

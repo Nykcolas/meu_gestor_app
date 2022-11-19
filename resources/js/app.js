@@ -18,13 +18,14 @@ Vue.component('paginacaoComponent', require('./components/elements/Paginacao.vue
 Vue.component('modalComponent', require('./components/elements/Modal.vue').default);
 
 /*Telas aqui!*/
-Vue.component('Contas', require('./components/app/Contas.vue').default);
 Vue.component('Login', require('./components/app/Login.vue').default);
-Vue.component('Registrar', require('./components/app/Registrar.vue').default);
 Vue.component('Email', require('./components/app/Email.vue').default);
 Vue.component('Home', require('./components/app/Home.vue').default);
 Vue.component('Redefinirsenha', require('./components/app/RedefinirSenha.vue').default);
 Vue.component('Verificar', require('./components/app/Verificar.vue').default);
+//Form
+Vue.component('Contas', require('./components/app/Contas.vue').default);
+Vue.component('Registrar', require('./components/app/Registrar.vue').default);
  
 const app = new Vue({
     el: '#app',

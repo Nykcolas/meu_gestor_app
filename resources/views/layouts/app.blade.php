@@ -37,15 +37,12 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         @auth
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Gerações</a>
-
-                                <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{route('contas')}}">
-                                        Contas
-                                    </a>
-                                </div>
-                            </li>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Gerações</a>
+                            <div class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                                @include('layouts.tabsForm')
+                            </div>
+                        </li>
                         @endauth
                     </ul>
 
