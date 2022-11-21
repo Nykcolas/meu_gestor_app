@@ -29,7 +29,7 @@ class MakeMigrationForm extends GeneratorCommand
 
     protected function getPath($name)
     {
-        $name = str_replace($this->argument('name'), date("Y_m_d_his_")."CreateTable_".ucfirst($this->argument('name')), $name);
+        $name = str_replace($this->argument('name'), date("Y_m_d_his_")."create_".$this->argument('name')."_table", $name);
         $name = Str::replaceFirst($this->rootNamespace(), '', $name);
         $laravelPath = $this->laravel['path'];
         $laravelPath = Str::replaceFirst('\\app', '', $laravelPath);

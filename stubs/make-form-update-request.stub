@@ -8,6 +8,8 @@ class Update{{ classUpdate }}Request extends FormRequest
 {
     public function rules()
     {
-        return [];
+        return [
+            //rules
+        ];
     }
 }
