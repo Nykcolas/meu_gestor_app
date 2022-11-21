@@ -1,0 +1,16 @@
+-------------------------------------------------------
+Contas
+    unique nome_conta varchar 50
+    valor_pago_mensal decimal 8,2
+    data_inicio_conta date
+    dia_vencimento int 11 null
+-------------------------------------------------------
+Dividas
+    nome_credor varchar 50
+    descricao_divida varchar 200
+    divida_finalizada boolean
+    observacao_divida varchar 50 null
+    valor_inicial decimal 8,2
+    valor_pago decimal 8,2
+    valor_atual decimal 8,2
+----------------------------------------------------------
