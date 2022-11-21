@@ -39,7 +39,8 @@ class MakeFormAllRollBack extends Command
      */
     public function handle()
     {
-        if ($this->confirm('Isso vai reverter o codigo gerado pelo comando "make:formAll '.$this->argument('name').'" deseja continuar?')) {
+        $this->warn('Isso vai reverter o codigo gerado pelo comando "make:formAll '.$this->argument('name').'" deseja continuar?');
+        if ($this->confirm('')) {
             $this->deleteFiles();
             $this->deleteLines();
         }
