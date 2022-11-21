@@ -13,9 +13,13 @@ class MakeModelForm extends GeneratorCommand
 
     protected function replaceClass($stub, $name)
     {
-        // $stub = parent::replaceClass($stub, $name);
+        $stub = $this->replaceClassItems($stub);
         $stub = str_replace('{{ classModel }}', ucfirst($this->argument('name')), $stub);
         return $stub;
+    }
+
+    protected function replaceClassItems($stub) {
+        return str_replace('{{ table }}', $this->argument('name'), $stub);
     }
 
     protected function getStub()

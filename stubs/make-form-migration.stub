@@ -8,7 +8,7 @@ class Create{{classMigration}}Table extends Migration
 {
     public function up()
     {
-        Schema::create('{{table}}s', function (Blueprint $table) {
+        Schema::create('{{table}}', function (Blueprint $table) {
             $table->id();
             //colums
             $table->timestamps();
@@ -17,6 +17,6 @@ class Create{{classMigration}}Table extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('{{table}}s');
+        Schema::dropIfExists('{{table}}');
     }
 }
