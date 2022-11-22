@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class MakeUpdateForm extends GeneratorCommand
 {
-    protected $signature = 'make:formUpdate {name}';
+    protected $signature = 'form:update {name}';
 
     protected $description = 'Create a new Form Update request';
 

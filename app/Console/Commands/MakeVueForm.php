@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class MakeVueForm extends GeneratorCommand
 {
-    protected $signature = 'make:formVue {name}';
+    protected $signature = 'form:vue {name}';
 
     protected $description = 'Create a new Form Vue';
 

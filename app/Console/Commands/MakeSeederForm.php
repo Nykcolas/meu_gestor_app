@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class MakeSeederForm extends GeneratorCommand
 {
-    protected $signature = 'make:formSeeder {name}';
+    protected $signature = 'form:seeder {name}';
 
     protected $description = 'Create a new Form Seeder';
 

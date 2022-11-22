@@ -13,4 +13,5 @@ Dividas
     valor_inicial decimal 8,2
     valor_pago decimal 8,2
     valor_atual decimal 8,2
+['nome_credor'=>[], 'descricao_divida'=>['length'=>200], 'divida_finalizada'=>['type'=>'boolean'], 'observacao_divida'=>['default'=>'null'], 'valor_inicial'=>['type'=>'decimal', 'length'=>'8,2'], 'valor_pago'=>['type'=>'decimal', 'length'=>'8,2'], 'valor_atual'=>['type'=>'decimal', 'length'=>'8,2']]
 ----------------------------------------------------------

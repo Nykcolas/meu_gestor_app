@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class MakeMigrationForm extends GeneratorCommand
 {
-    protected $signature = 'make:formMigration {name}';
+    protected $signature = 'form:migration {name}';
 
     protected $description = 'Create a new Form Migration';
 

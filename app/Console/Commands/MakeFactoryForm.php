@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class MakeFactoryForm extends GeneratorCommand
 {
-    protected $signature = 'make:formFactory {name}';
+    protected $signature = 'form:factory {name}';
 
     protected $description = 'Create a new Form Factory';
 

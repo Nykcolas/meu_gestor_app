@@ -12,14 +12,14 @@ class MakeForm extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'make:form {name}';
+    protected $signature = 'form:controller {name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a new Form';
+    protected $description = 'Create a new Form controller';
 
     /**
      * Create a new command instance.

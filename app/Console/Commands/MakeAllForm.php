@@ -8,7 +8,7 @@ use Illuminate\Filesystem\Filesystem as File;
 
 class MakeAllForm extends Command
 {
-    protected $signature = 'make:formAll {name}';
+    protected $signature = 'form:all {name}';
     protected $description = 'Create a new form controller, model, migration, seeder and requests';
 
     public function __construct()
@@ -27,9 +27,10 @@ class MakeAllForm extends Command
             [
                 '".$this->argument('name')."_coluna'=>
                     [
-                        'type'=>'varchar'
-                        'default'=>null
-                        'length'=>50
+                        'type'=>'varchar',
+                        'default'=>null,
+                        'length'=>50,
+                        'unique'=>true
                     ]
             ]"
             );
@@ -46,11 +47,17 @@ class MakeAllForm extends Command
                         'date'=>'date',
                         'decimal'=>'decimal',
                         'int'=>'integer',
-                        'datetime'=>'dateTime'];
+                        'datetime'=>'dateTime',
+                        'boolean'=>'boolean'
+                    ];
         $command = "            //colums\n";
+        $key = "";
         foreach ($array_colums as $name_colum => $attrubetes) {
             $length = isset($attrubetes["length"]) ? ", $attrubetes[length]" : '';
             $default = '';
+            if (array_key_exists("unique", $attrubetes) && $attrubetes["unique"]) {
+                $key = "->unique()";
+            }
             if (isset($attrubetes["default"])) {
                 if ($attrubetes["default"] == null) {
                     $default = '->nullable()';
@@ -58,7 +65,7 @@ class MakeAllForm extends Command
                     $default = "->default(".$attrubetes["default"].")";
                 }
             }
-            $command .= '            $table->'.($array_types[$attrubetes['type']]??'string').'("'.$name_colum.'"'.$length.')'.$default.";\n";
+            $command .= '            $table->'.($array_types[$attrubetes['type']]??'string').'("'.$name_colum.'"'.$length.')'.$default.$key.";\n";
         }
         $array_migrations = File::files('database/migrations/');
         end($array_migrations);
@@ -73,8 +80,9 @@ class MakeAllForm extends Command
         $commandInput = "            <!-- inputs -->\n";
         $commandColums = "                //colums\n";
         foreach ($array_colums as $name_colum => $attrubetes) {
-            $type = $attrubetes['type'] == "date" ? 'date': 'text';
+            $type = "";
             $mask = '';
+            $option = '';
             switch ($attrubetes['type']) {
                 case 'decimal':
                     $mask = 'mascara="decimal"';
@@ -83,13 +91,23 @@ class MakeAllForm extends Command
                 case 'int':
                     $mask = 'mascara="inteiro"';
                     break;
-                
+                case 'boolean':
+                    $option = ":options=\"{true:'Sim', false:'Não'}\"";
+                    break;
+                case 'datetime':
+                    $type = "type=\"datetime-local\"";
+                    break;
+                case "date":
+                    $type = "type=\"date\"";
+                    break;
                 default:
+                    $type = '';
+                    $option = '';
                     $mask = '';
                     break;
             }
             $label = ucwords(str_replace('_', ' ', $name_colum));
-            $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\" $mask type=\"$type\"></inputComponent>\n";
+            $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\" $mask $type $option></inputComponent>\n";
             $commandColums .= "                $name_colum:'$label',\n";
         }
 
@@ -108,15 +126,25 @@ class MakeAllForm extends Command
                 $rules .= "required";
             }
 
+            if (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) {
+                $rules .= !array_key_exists('default', $attrubetes) ? "|unique:".$this->argument('name'): "unique:".$this->argument('name');
+            }
+
             switch ($attrubetes['type']) {
                 case 'decimal':
-                    $rules .= !array_key_exists('default', $attrubetes) ? "|numeric" : "numeric";
+                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|numeric" : "numeric";
                     break;
                 case 'int':
-                    $rules .= 'numeric';
+                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|numeric" : "numeric";
                     break;
                 case 'date':
-                    $rules .= 'date';
+                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|date" : "date";
+                    break;
+                case 'datetime':
+                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|date" : "date";
+                    break;
+                case 'boolean':
+                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|boolean" : "boolean";
                     break;
                 case 'varchar':
                     $rules .= '';
@@ -148,19 +176,19 @@ class MakeAllForm extends Command
     public function callCommandMake()
     {
         $commands = [
-            'form'=>"Um novo arquivo controller para Form foi criado com sucesso",
-            'formModel'=>"Um novo arquivo Model para Form foi criado com sucesso",
-            'formUpdate'=>"Um novo arquivo Update para Form foi criado com sucesso",
-            'formStore'=>"Um novo arquivo Store para Form foi criado com sucesso",
-            'formMigration'=>"Um novo arquivo Migration para Form foi criado com sucesso",
-            'formSeeder'=>"Um novo arquivo Seeder para Form foi criado com sucesso",
-            'formFactory'=>"Um novo arquivo Factory para Form foi criado com sucesso",
-            'formView'=>"Um novo arquivo View para Form foi criado com sucesso",
-            'formVue'=>"Um novo arquivo Vue para Form foi criado com sucesso",
+            'controller'=>"Um novo arquivo controller para Form foi criado com sucesso",
+            'model'=>"Um novo arquivo Model para Form foi criado com sucesso",
+            'update'=>"Um novo arquivo Update para Form foi criado com sucesso",
+            'store'=>"Um novo arquivo Store para Form foi criado com sucesso",
+            'migration'=>"Um novo arquivo Migration para Form foi criado com sucesso",
+            'seeder'=>"Um novo arquivo Seeder para Form foi criado com sucesso",
+            'factory'=>"Um novo arquivo Factory para Form foi criado com sucesso",
+            'view'=>"Um novo arquivo View para Form foi criado com sucesso",
+            'vue'=>"Um novo arquivo Vue para Form foi criado com sucesso",
         ];
 
         foreach ($commands as $key => $value) {
-            Artisan::call('make:'.$key, ['name'=>$this->argument('name')]);
+            Artisan::call('form:'.$key, ['name'=>$this->argument('name')]);
             $this->info($value);
         }
     }

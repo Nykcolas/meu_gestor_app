@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class MakeModelForm extends GeneratorCommand
 {
-    protected $signature = 'make:formModel {name}';
+    protected $signature = 'form:model {name}';
 
     protected $description = 'Create a new Form Model';
 

@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class MakeStoreForm extends GeneratorCommand
 {
-    protected $signature = 'make:formStore {name}';
+    protected $signature = 'form:store {name}';
 
     protected $description = 'Create a new Form Store request';
 

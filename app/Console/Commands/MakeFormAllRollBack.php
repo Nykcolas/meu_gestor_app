@@ -13,14 +13,14 @@ class MakeFormAllRollBack extends Command
      *
      * @var string
      */
-    protected $signature = 'make:formAllRollBack {name}';
+    protected $signature = 'form:rollback {name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Delete all files created in make:formAll';
+    protected $description = 'Delete all files created in form:all';
 
     /**
      * Create a new command instance.

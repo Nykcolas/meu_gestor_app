@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 class MakeViewForm extends GeneratorCommand
 {
-    protected $signature = 'make:formView {name}';
+    protected $signature = 'form:view {name}';
 
     protected $description = 'Create a new Form View';
 

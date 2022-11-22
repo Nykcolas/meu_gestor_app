@@ -1,7 +1,29 @@
 <template>
     <div :class="divClasse + comprimento">
         <label v-if="label" :class="labelClasse" :for="name">{{label}}</label>
-        <input :type="tipo" :name="name" @input="$emit('input', $event)" :class="classe" v-maska="formato" v-bind="$attrs" :value="value" :id="name" :placeholder="placeholderInput">
+        <input 
+            v-if="!options"
+            :type="tipo" 
+            :name="name" 
+            @input="$emit('input', $event)"
+            :class="classe"
+            v-maska="formato" 
+            v-bind="$attrs"
+            :value="value"
+            :id="name" 
+            :placeholder="placeholderInput"
+        >
+        <select 
+            v-else
+            :name="name" 
+            :id="name"
+            @input="$emit('input', $event)"
+            v-bind="$attrs"
+            class="form-select form-select-sm"
+        >
+            <option value="" selected>Selecione:</option>
+            <option v-for="(text, value) in options" :key="text" :value="value">{{text}}</option>
+        </select>
     </div>
 </template>
 
@@ -18,7 +40,8 @@ export default {
         "divClass",
         "largura",
         "mascara",
-        "value"
+        "value",
+        'options'
     ],
     data() {
         return {
