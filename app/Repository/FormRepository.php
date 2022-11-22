@@ -47,7 +47,20 @@ class FormRepository extends Controller
     public function index()
     {
         $pagination = $this->pagination ?? 5;
-        return response()->json($this->model->paginate($pagination), 200);
+        $bool = null;
+        $list = $this->model->paginate($pagination);
+        foreach ($this->storeRequest->rules() as $key => $value) {
+            if (strpos($value, 'boolean')) {
+                $bool[] = $key;
+            }
+        }
+        
+        foreach ($list as $key => $value) {
+            
+            $value->$bool = $value->$bool == 1 ? "Sim" : "Não";
+        }
+
+        return response()->json($list, 200);
     }
 
     public function show($id)

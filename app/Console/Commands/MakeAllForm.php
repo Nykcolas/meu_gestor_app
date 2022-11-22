@@ -59,13 +59,13 @@ class MakeAllForm extends Command
                 $key = "->unique()";
             }
             if (isset($attrubetes["default"])) {
-                if ($attrubetes["default"] == null) {
+                if (in_array($attrubetes["default"], ['null', null])) {
                     $default = '->nullable()';
                 } else {
                     $default = "->default(".$attrubetes["default"].")";
                 }
             }
-            $command .= '            $table->'.($array_types[$attrubetes['type']]??'string').'("'.$name_colum.'"'.$length.')'.$default.$key.";\n";
+            $command .= '            $table->'.$array_types[$attrubetes['type']??'varchar'].'("'.$name_colum.'"'.$length.')'.$default.$key.";\n";
         }
         $array_migrations = File::files('database/migrations/');
         end($array_migrations);
@@ -83,29 +83,30 @@ class MakeAllForm extends Command
             $type = "";
             $mask = '';
             $option = '';
-            switch ($attrubetes['type']) {
-                case 'decimal':
-                    $mask = 'mascara="decimal"';
-                    break;
+            if (array_key_exists('type', $attrubetes))
+                switch ($attrubetes['type']) {
+                    case 'decimal':
+                        $mask = 'mascara="decimal"';
+                        break;
 
-                case 'int':
-                    $mask = 'mascara="inteiro"';
-                    break;
-                case 'boolean':
-                    $option = ":options=\"{true:'Sim', false:'Não'}\"";
-                    break;
-                case 'datetime':
-                    $type = "type=\"datetime-local\"";
-                    break;
-                case "date":
-                    $type = "type=\"date\"";
-                    break;
-                default:
-                    $type = '';
-                    $option = '';
-                    $mask = '';
-                    break;
-            }
+                    case 'int':
+                        $mask = 'mascara="inteiro"';
+                        break;
+                    case 'boolean':
+                        $option = ":options=\"{1:'Sim', 0:'Não'}\"";
+                        break;
+                    case 'datetime':
+                        $type = "type=\"datetime-local\"";
+                        break;
+                    case "date":
+                        $type = "type=\"date\"";
+                        break;
+                    default:
+                        $type = '';
+                        $option = '';
+                        $mask = '';
+                        break;
+                }
             $label = ucwords(str_replace('_', ' ', $name_colum));
             $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\" $mask $type $option></inputComponent>\n";
             $commandColums .= "                $name_colum:'$label',\n";
@@ -130,30 +131,31 @@ class MakeAllForm extends Command
                 $rules .= !array_key_exists('default', $attrubetes) ? "|unique:".$this->argument('name'): "unique:".$this->argument('name');
             }
 
-            switch ($attrubetes['type']) {
-                case 'decimal':
-                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|numeric" : "numeric";
-                    break;
-                case 'int':
-                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|numeric" : "numeric";
-                    break;
-                case 'date':
-                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|date" : "date";
-                    break;
-                case 'datetime':
-                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|date" : "date";
-                    break;
-                case 'boolean':
-                    $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|boolean" : "boolean";
-                    break;
-                case 'varchar':
-                    $rules .= '';
-                    break;
-                
-                default:
-                    $rules .= '';
-                    break;
-            }
+            if (array_key_exists('type', $attrubetes))
+                switch ($attrubetes['type']) {
+                    case 'decimal':
+                        $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|numeric" : "numeric";
+                        break;
+                    case 'int':
+                        $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|numeric" : "numeric";
+                        break;
+                    case 'date':
+                        $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|date" : "date";
+                        break;
+                    case 'datetime':
+                        $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|date" : "date";
+                        break;
+                    case 'boolean':
+                        $rules .= !array_key_exists('default', $attrubetes) || (array_key_exists('unique', $attrubetes) && $attrubetes['unique']) ? "|boolean" : "boolean";
+                        break;
+                    case 'varchar':
+                        $rules .= '';
+                        break;
+                    
+                    default:
+                        $rules .= '';
+                        break;
+                }
             
             $commandColums .= "            '$name_colum' => '$rules',\n";
         }
