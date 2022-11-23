@@ -5,7 +5,7 @@
             <table v-show="lsitaFiltrada !== undefined" class="table table-bordered table-striped table-hover table-responsive-sm">
                 <thead>
                     <tr>
-                        <th v-for="(name, index) in colums" :key="index">{{name}}</th>
+                        <th v-for="(name, index) in colums" :key="index">{{verificaColums(name)}}</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -18,7 +18,7 @@
                     v-if="this.lsitaFiltrada && this.lsitaFiltrada.length > 0"
                 >
                     <tr v-for="(arr, tr) in lsitaFiltrada" :key="lsitaFiltrada[tr].id">
-                        <td v-for="(name, index) in colums" :align="arr[index] && (((!isNaN(arr[index].toString().substr(0, 1))) && arr[index].toString().indexOf('.') !== -1)) || !isNaN(arr[index]) ?'right':''" :key="index">{{FormataValor(arr[index])}}</td>
+                        <td v-for="(name, index) in colums" :align="arr[index] && (((!isNaN(arr[index].toString().substr(0, 1))) && arr[index].toString().indexOf('.') !== -1)) || !isNaN(arr[index]) ?'right':''" :key="index">{{AjustaValorTable(name, arr[index])}}</td>
                         <td style="width: 1rem;">
                             <div class="btn-group" role="group" aria-label="Basic example">
                                 <buttonComponent v-if="permissoes.u" label="Atualizar" type="primary" @click="EmitEventoForm('U'), Update(arr['id'])"></buttonComponent>
@@ -55,6 +55,12 @@ export default {
         }
     },
     methods: {
+        verificaColums(colums) {
+            if (typeof colums === 'object' && !Array.isArray(colums) && colums !== null){
+                return colums.name
+            }
+            return colums;
+        },
         EmitEventoForm(acao) {
             this.$emit("EmitEventoForm", acao);
         },
@@ -87,7 +93,12 @@ export default {
         Pesquisar(event) {
             this.pesquisa = event.target.value;
         },
-
+        AjustaValorTable(th, td) {
+            if (typeof th === 'object' && !Array.isArray(th) && th !== null){
+                return th.options[td];
+            }
+            return this.FormataValor(td);
+        }
     },
     computed: {
         FiltraLista() {

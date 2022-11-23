@@ -82,20 +82,20 @@ class MakeAllForm extends Command
             if (array_key_exists('type', $attrubetes)) {
                 switch ($attrubetes['type']) {
                     case 'decimal':
-                        $mask = 'mascara="decimal"';
+                        $mask = ' mascara="decimal"';
                         break;
 
                     case 'int':
-                        $mask = 'mascara="inteiro"';
+                        $mask = ' mascara="inteiro"';
                         break;
                     case 'boolean':
                         $option = ":options=\"{1:'Sim', 0:'Não'}\"";
                         break;
                     case 'datetime':
-                        $type = "type=\"datetime-local\"";
+                        $type = " type=\"datetime-local\"";
                         break;
                     case "date":
-                        $type = "type=\"date\"";
+                        $type = " type=\"date\"";
                         break;
                     default:
                         $type = '';
@@ -104,14 +104,15 @@ class MakeAllForm extends Command
                         break;
                 }
             }
-
+            $label = ucwords(str_replace('_', ' ', $name_colum));
+            $labelTable = "\"$label\"";
             if (array_key_exists("options", $attrubetes)) {
-                $option = ":options='".json_encode($attrubetes['options'])."'";
+                $option = " :options='colums.$name_colum.options'";
+                $labelTable = "{\n                     name:".ucwords(str_replace('_', ' ', $name_colum)).",\n                    options:".json_encode($attrubetes['options'])."\n                }";
             }
 
-            $label = ucwords(str_replace('_', ' ', $name_colum));
-            $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\" $mask $type $option></inputComponent>\n";
-            $commandColums .= "                $name_colum:'$label',\n";
+            $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\" $mask$type$option></inputComponent>\n";
+            $commandColums .= "                $name_colum:$labelTable,\n";
         }
 
         File::replaceInFile("            <!-- inputs -->", $commandInput, 'resources/js/components/app/'.ucfirst($this->argument('name')).'.vue');
