@@ -54,11 +54,18 @@ class FormRepository extends Controller
                 $bool[] = $key;
             }
         }
-        
-        foreach ($list as $key => $value) {
-            
-            $value->$bool = $value->$bool == 1 ? "Sim" : "Não";
+        if ($bool != null) {
+            foreach ($list as $key => $value) {
+                foreach ($bool as $key => $colum) {
+                    if ($value->$colum == 1) {
+                        $value->$colum = "Sim";
+                    } elseif ($value->$colum == 0) {
+                        $value->$colum = "Não";
+                    }
+                }
+            }
         }
+        
 
         return response()->json($list, 200);
     }

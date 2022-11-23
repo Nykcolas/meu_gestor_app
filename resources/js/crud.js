@@ -138,9 +138,9 @@ export default {
             for (const key in FormSubmit.firstElementChild.children) {
                 let input = FormSubmit.firstElementChild.children[key].lastChild
                 if (input) {
-                    if (input.nodeName == "INPUT") {
+                    if (input.nodeName == "INPUT" || input.nodeName == "SELECT") {
                         input.removeAttribute('disabled');
-                        if (this.dataRota[input.name]) {
+                        if (input.name in this.dataRota) {
                             input.value = await input.type != 'date'?this.FormataValor(this.dataRota[input.name]): this.dataRota[input.name];
                             if (acao == "R") {
                                 input.setAttribute('disabled', '');

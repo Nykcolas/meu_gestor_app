@@ -39,10 +39,10 @@ class MakeFormAllRollBack extends Command
      */
     public function handle()
     {
-        $this->warn('Isso vai reverter o codigo gerado pelo comando "make:formAll '.$this->argument('name').'" deseja continuar?');
+        $this->warn('Isso vai reverter o codigo gerado pelo comando "form:all '.$this->argument('name').'" deseja continuar?');
         if ($this->confirm('')) {
-            $this->deleteFiles();
             $this->deleteLines();
+            $this->deleteFiles();
         }
     }
 
@@ -50,8 +50,12 @@ class MakeFormAllRollBack extends Command
     {
         File::replaceInFile("//Forms\nRoute::apiResource('".$this->argument('name')."', \App\Http\Controllers\\".ucfirst($this->argument('name'))."Controller::class);", "//Forms", 'routes/api.php');
         File::replaceInFile("//Forms\n    Route::get('/".$this->argument('name')."', function() {return view('app\\".$this->argument('name')."');})->name('".$this->argument('name')."');", "//Forms", 'routes/web.php');
-        File::replaceInFile("//Form\nVue.component('".ucfirst($this->argument('name'))."', require('./components/app/".ucfirst($this->argument('name')).".vue').default);", "//Form", 'resources/js/app.js');        
-        File::replaceInFile("\n<a class='dropdown-item' href='{{route(\"".$this->argument('name')."\")}}'>".ucfirst($this->argument('name'))."</a>", "", 'resources/views/layouts/tabsForm.blade.php');        
+        File::replaceInFile("//Form\nVue.component('".ucfirst($this->argument('name'))."', require('./components/app/".ucfirst($this->argument('name')).".vue').default);", "//Form", 'resources/js/app.js');
+        File::replaceInFile("\n<a class='dropdown-item' href='{{route(\"".$this->argument('name')."\")}}'>".ucfirst($this->argument('name'))."</a>", "", 'resources/views/layouts/tabsForm.blade.php');
+        $this->warn("Uma linha do \"arquivo resources/views/layouts/tabsForm.blade.php\" Foi removida");
+        $this->warn("Uma linha do \"arquivo routes/api.php\" Foi removida");
+        $this->warn("Uma linha do \"arquivo routes/web.php\" Foi removida");
+        $this->warn("Uma linha do \"arquivo resources/views/layouts/tabsForm.blade.php\" Foi removida");
     }
 
     public function deleteFiles()
@@ -73,5 +77,14 @@ class MakeFormAllRollBack extends Command
         File::delete('resources/js/components/app/'.ucfirst($this->argument('name')).".vue");
         Artisan::call("migrate:rollback --path=database/migrations/$file_name");
         File::delete("database/migrations/$file_name");
+        $this->warn("O arquivo \"app/Http/Controllers/".ucfirst($this->argument('name'))."Controller.php\" Foi Deletado");
+        $this->warn("O arquivo \"app/Models/".ucfirst($this->argument('name')).".php\" Foi Deletado");
+        $this->warn("O arquivo \"app/Http/Requests/Store".ucfirst($this->argument('name'))."Request.php\" Foi Deletado");
+        $this->warn("O arquivo \"app/Http/Requests/Update".ucfirst($this->argument('name'))."Request.php\" Foi Deletado");
+        $this->warn("O arquivo \"database/seeders/".ucfirst($this->argument('name'))."Seeder.php\" Foi Deletado");
+        $this->warn("O arquivo \"database/factories/".ucfirst($this->argument('name'))."Factory.php\" Foi Deletado");
+        $this->warn("O arquivo \"resources/views/app/".$this->argument('name').".blade.php\" Foi Deletado");
+        $this->warn("O arquivo \"resources/js/components/app/".ucfirst($this->argument('name')).".vue\" Foi Deletado");
+        $this->warn("O arquivo \"database/migrations/$file_name\" Foi Deletado");
     }
 }

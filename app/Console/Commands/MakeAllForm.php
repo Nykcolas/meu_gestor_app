@@ -20,20 +20,8 @@ class MakeAllForm extends Command
     {
         $this->callCommandMake();
         $this->createANewLine();
-        if ($this->confirm('Você deseja criar as colunas da tabela "'.$this->argument('name').'" agora?
-        OBS.: Não recomendado em caso de uso de FK')) {
-            $this->comment("Crie um objeto com as clunas desejadas, seguindo o senguinte padrão:
-
-            [
-                '".$this->argument('name')."_coluna'=>
-                    [
-                        'type'=>'varchar',
-                        'default'=>null,
-                        'length'=>50,
-                        'unique'=>true
-                    ]
-            ]"
-            );
+        if ($this->confirm("Você deseja criar as colunas da tabela \"".$this->argument('name')."\" agora?\n OBS.: Não recomendado em caso de uso de FK")) {
+            $this->comment("Crie um array com as colunas desejadas, seguindo o senguinte padrão:\n ['".$this->argument('name')."_coluna'=>['type'=>'varchar','default'=>null,'length'=>50,'unique'=>true]]");
             $str_colums = $this->ask("");
             $array_colums = eval("return $str_colums;");
             $this->MakeColumsMigrate($array_colums);
@@ -52,20 +40,28 @@ class MakeAllForm extends Command
                     ];
         $command = "            //colums\n";
         $key = "";
+        $comment = "";
         foreach ($array_colums as $name_colum => $attrubetes) {
             $length = isset($attrubetes["length"]) ? ", $attrubetes[length]" : '';
             $default = '';
+
             if (array_key_exists("unique", $attrubetes) && $attrubetes["unique"]) {
                 $key = "->unique()";
             }
-            if (isset($attrubetes["default"])) {
+
+            if (array_key_exists("options", $attrubetes)) {
+                $comment = "->comment('".json_encode($attrubetes['options'])."')";
+            }
+
+            if (array_key_exists("default", $attrubetes)) {
                 if (in_array($attrubetes["default"], ['null', null])) {
                     $default = '->nullable()';
                 } else {
                     $default = "->default(".$attrubetes["default"].")";
                 }
             }
-            $command .= '            $table->'.$array_types[$attrubetes['type']??'varchar'].'("'.$name_colum.'"'.$length.')'.$default.$key.";\n";
+
+            $command .= '            $table->'.$array_types[$attrubetes['type']??'varchar'].'("'.$name_colum.'"'.$length.')'.$default.$key.$comment.";\n";
         }
         $array_migrations = File::files('database/migrations/');
         end($array_migrations);
@@ -83,7 +79,7 @@ class MakeAllForm extends Command
             $type = "";
             $mask = '';
             $option = '';
-            if (array_key_exists('type', $attrubetes))
+            if (array_key_exists('type', $attrubetes)) {
                 switch ($attrubetes['type']) {
                     case 'decimal':
                         $mask = 'mascara="decimal"';
@@ -107,6 +103,12 @@ class MakeAllForm extends Command
                         $mask = '';
                         break;
                 }
+            }
+
+            if (array_key_exists("options", $attrubetes)) {
+                $option = ":options='".json_encode($attrubetes['options'])."'";
+            }
+
             $label = ucwords(str_replace('_', ' ', $name_colum));
             $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\" $mask $type $option></inputComponent>\n";
             $commandColums .= "                $name_colum:'$label',\n";
@@ -173,6 +175,10 @@ class MakeAllForm extends Command
         File::replaceInFile("//Forms", "//Forms\nRoute::apiResource('".$this->argument('name')."', \App\Http\Controllers\\".ucfirst($this->argument('name'))."Controller::class);", 'routes/api.php');
         File::replaceInFile("//Forms", "//Forms\n    Route::get('/".$this->argument('name')."', function() {return view('app\\".$this->argument('name')."');})->name('".$this->argument('name')."');", 'routes/web.php');
         File::replaceInFile("//Form", "//Form\nVue.component('".ucfirst($this->argument('name'))."', require('./components/app/".ucfirst($this->argument('name')).".vue').default);", 'resources/js/app.js');
+        $this->info("Uma Nova linhas foi gerada em resources/js/app.js");
+        $this->info("Uma Nova linhas foi gerada em routes/web.php");
+        $this->info("Uma Nova linhas foi gerada em routes/api.php");
+        $this->info("Uma Nova linhas foi gerada em resources/views/layouts/tabsForm.blade.php");
     }
 
     public function callCommandMake()
