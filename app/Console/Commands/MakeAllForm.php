@@ -38,7 +38,7 @@ class MakeAllForm extends Command
                         'datetime'=>'dateTime',
                         'boolean'=>'boolean'
                     ];
-        $command = "            //colums\n";
+        $command = "            \n";
         $key = "";
         $comment = "";
         foreach ($array_colums as $name_colum => $attrubetes) {
@@ -73,8 +73,8 @@ class MakeAllForm extends Command
 
     public function MakeInputsColumsVue(array $array_colums)
     {
-        $commandInput = "            <!-- inputs -->\n";
-        $commandColums = "                //colums\n";
+        $commandInput = "            \n";
+        $commandColums = "                \n";
         foreach ($array_colums as $name_colum => $attrubetes) {
             $type = "";
             $mask = '';
@@ -105,13 +105,13 @@ class MakeAllForm extends Command
                 }
             }
             $label = ucwords(str_replace('_', ' ', $name_colum));
-            $labelTable = "\"$label\"";
+            $labelTable = "'$label'";
             if (array_key_exists("options", $attrubetes)) {
                 $option = " :options='colums.$name_colum.options'";
-                $labelTable = "{\n                     name:".ucwords(str_replace('_', ' ', $name_colum)).",\n                    options:".json_encode($attrubetes['options'])."\n                }";
+                $labelTable = "{\n                    name:$labelTable,\n                    options:".json_encode($attrubetes['options'])."\n                }";
             }
 
-            $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\" $mask$type$option></inputComponent>\n";
+            $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\"$mask$type$option></inputComponent>\n";
             $commandColums .= "                $name_colum:$labelTable,\n";
         }
 
@@ -123,7 +123,7 @@ class MakeAllForm extends Command
 
     public function MakeRulesUpdateStoreRequests(array $array_colums)
     {
-        $commandColums = "            //rules\n";
+        $commandColums = "            \n";
         foreach ($array_colums as $name_colum => $attrubetes) {
             $rules = "";
             if (!array_key_exists('default', $attrubetes)) {
