@@ -1,18 +1,41 @@
--------------------------------------------------------
-Contas
-    unique nome_conta varchar 50
-    valor_pago_mensal decimal 8,2
-    data_inicio_conta date
-    dia_vencimento int 11 null
--------------------------------------------------------
-Dividas
-    nome_credor varchar 50
-    descricao_divida varchar 200
-    divida_finalizada boolean
-    observacao_divida varchar 50 null
-    valor_inicial decimal 8,2
-    valor_pago decimal 8,2
-    valor_atual decimal 8,2
-<!-- ['nome_credor'=>[], 'descricao_divida'=>['length'=>200], 'divida_finalizada'=>['type'=>'boolean'], 'observacao_divida'=>['default'=>'null'], 'valor_inicial'=>['type'=>'decimal', 'length'=>'8,2'], 'valor_pago'=>['type'=>'decimal', 'length'=>'8,2'], 'valor_atual'=>['type'=>'decimal', 'length'=>'8,2']] -->
-['nome_credor'=>[], 'descricao_divida'=>['length'=>200], 'divida_finalizada'=>['type'=>'boolean'], 'observacao_divida'=>['default'=>'null'], 'valor_inicial'=>['type'=>'decimal', 'length'=>'8,2'], 'valor_pago'=>['type'=>'decimal', 'length'=>'8,2'], 'valor_atual'=>['type'=>'decimal', 'length'=>'8,2'], 'tipo_divida'=>['length'=>'2', 'options' => ['FI' => "Finitas",'IN' => "Infinitas"]]]
-----------------------------------------------------------
+|===========================================================|
+|---------------------------Telas---------------------------|
+|===========================================================|
+|Contas                                                     |
+|    unique nome_conta varchar 50                           |
+|    valor_pago_mensal decimal 8,2                          |
+|    data_inicio_conta date                                 |
+|    dia_vencimento int 11 null                             |
+|===========================================================|
+|Dividas                                                    |
+|    nome_credor varchar 50                                 |
+|    descricao_divida varchar 200                           |
+|    divida_finalizada boolean                              |
+|   observacao_divida varchar 50 null                       |
+|    valor_inicial decimal 8,2                              |
+|    valor_pago decimal 8,2                                 |
+|    valor_atual decimal 8,2                                |
+|===========================================================|
+|--------------------------Padrões--------------------------|
+|===========================================================|
+|Padões campos                                              |
+|Padões Form  ->Feito<-                                     |
+|Padões Filter                                              |
+|Padões Importações                                         |
+|===========================================================|
+|-----------------------Padões campos-----------------------|
+|===========================================================|
+|Criar input  ->Feito<-                                     |
+|Criar mascara  ->Feito<-                                   |
+|Criar checkbox  ->Feito<-                                  |
+|Criar select list ->Feito<-                                |
+|Criar select list multiplo                                 |
+|===========================================================|
+|------------------------Padões Form------------------------|
+|===========================================================|
+|Criar table                ->Feito<-                       |
+|Criar as Ações             ->Feito<-                       |
+|Criar Modal                ->Feito<-                       |
+|Criar Botão table extra    ->Feito<-                       |
+|Criar Criar comando Form   ->Feito<-                       |
+|===========================================================|
