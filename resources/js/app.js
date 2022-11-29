@@ -16,6 +16,7 @@ Vue.component('formComponent', require('./components/elements/Form.vue').default
 Vue.component('containerComponent', require('./components/elements/Container.vue').default);
 Vue.component('paginacaoComponent', require('./components/elements/Paginacao.vue').default);
 Vue.component('modalComponent', require('./components/elements/Modal.vue').default);
+Vue.component('selectMultipeComponent', require('./components/elements/SelectMultipe.vue').default);
 
 /*Telas aqui!*/
 Vue.component('Login', require('./components/app/Login.vue').default);

@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@vueform/multiselect": "^2.5.7",
         "maska": "^1.5.0",
         "pinia": "^2.0.22",
         "v-mask": "^2.3.0",
