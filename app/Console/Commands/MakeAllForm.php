@@ -79,6 +79,7 @@ class MakeAllForm extends Command
             $type = "";
             $mask = '';
             $option = '';
+            $multiple = '';
             if (array_key_exists('type', $attrubetes)) {
                 switch ($attrubetes['type']) {
                     case 'decimal':
@@ -111,7 +112,11 @@ class MakeAllForm extends Command
                 $labelTable = "{\n                    name:$labelTable,\n                    options:".json_encode($attrubetes['options'])."\n                }";
             }
 
-            $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\"$mask$type$option></inputComponent>\n";
+            if (array_key_exists("multiple", $attrubetes) && $attrubetes["multiple"]) {
+                $multiple = " multiple";
+            }
+
+            $commandInput .= "            <inputComponent label=\"$label\" name=\"$name_colum\"$mask$type$option$multiple></inputComponent>\n";
             $commandColums .= "                $name_colum:$labelTable,\n";
         }
 

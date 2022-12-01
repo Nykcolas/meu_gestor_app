@@ -138,8 +138,8 @@ export default {
             for (const key in FormSubmit.firstElementChild.children) {
                 let input = FormSubmit.firstElementChild.children[key].lastChild
                 if (input) {
-                    if (input.nodeName == "INPUT" || input.nodeName == "SELECT") {
-                        input.removeAttribute('disabled');
+                    if (input.nodeName == "INPUT") {
+                            input.removeAttribute('disabled');
                         if (input.name in this.dataRota) {
                             input.value = await input.type != 'date'?this.FormataValor(this.dataRota[input.name]): this.dataRota[input.name];
                             if (acao == "R") {
@@ -147,6 +147,22 @@ export default {
                             }
                             if (acao == "U") {
                                 FormSubmit.setAttribute('data-id', this.dataRota["id"]);
+                            }
+                        }
+
+                    }
+                    if (input.nodeName == "DIV" && input.classList[0] == "multiselect") {
+                        const inputHidden = input.getElementsByTagName('input')[0]
+                        input.__vue__.$parent.stateValue = null
+                        input.__vue__.$parent.stateDisabled = false
+                        if (inputHidden.name in this.dataRota) {
+                            if(input.__vue__.mode == 'multiple'){
+                                input.__vue__.$parent.stateValue = this.dataRota[inputHidden.name].split(',');
+                            } else {
+                                input.__vue__.$parent.stateValue = this.dataRota[inputHidden.name];
+                            }
+                            if (acao == "R") {
+                                input.__vue__.$parent.stateDisabled = true
                             }
                         }
                     }

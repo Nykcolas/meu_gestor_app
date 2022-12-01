@@ -27,8 +27,8 @@
         <selectMultipeComponent 
             v-else-if="'multiple' in $attrs" 
             :name="name" 
-            :id="name" 
-            :value="value"
+            :id="name"
+            :value="value || stateValue"
             :placeholder="placeholderInput"
             :options="options"
             :openDirection="direcao" 
@@ -37,6 +37,7 @@
             :close-on-select="false"
             :searchable="pesquisa"
             :nativeSupport="true"
+            :disabled="stateDisabled"
 
             @paste="$emit('paste', $event)"
             @open="$emit('open', $event)"
@@ -68,12 +69,13 @@
             v-else
             :name="name" 
             :id="name" 
-            :value="value" 
+            :value="value || stateValue" 
             :placeholder="placeholderInput"
             :options="options"
             :searchable="pesquisa"
             :openDirection="direcao"
             :nativeSupport="true"
+            :disabled="stateDisabled"
 
             @paste="$emit('paste', $event)"
             @open="$emit('open', $event)"
@@ -126,6 +128,8 @@ export default {
             divClasse: this.divClass ?? (this.type == 'checkbox' ? 'form-check mb-3' : "mb-3"),
             comprimento: this.largura ? " col-md-" + this.largura : " col-auto",
             formato: this.GetFormato(),
+            stateDisabled: false,
+            stateValue: null,
         }
     },
     methods: {

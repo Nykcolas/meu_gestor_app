@@ -95,6 +95,18 @@ export default {
         },
         AjustaValorTable(th, td) {
             if (typeof th === 'object' && !Array.isArray(th) && th !== null){
+                const tdList = td.split(',');
+                if (tdList.length > 1) {
+                    let tdStr = "";
+                    for (const key in tdList) {
+                        const tdItem = tdList[key];
+                        if (th.options[tdItem])
+                            tdStr += tdList.length != Number(key)+1 ? `${th.options[tdItem]}, ` : th.options[tdItem];
+                    }
+                    if (tdStr != "") 
+                        return tdStr;
+                }
+
                 return th.options[td];
             }
             return this.FormataValor(td);

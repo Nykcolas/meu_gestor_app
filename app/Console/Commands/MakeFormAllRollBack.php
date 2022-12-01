@@ -48,9 +48,9 @@ class MakeFormAllRollBack extends Command
 
     public function deleteLines()
     {
-        File::replaceInFile("//Forms\nRoute::apiResource('".$this->argument('name')."', \App\Http\Controllers\\".ucfirst($this->argument('name'))."Controller::class);", "//Forms", 'routes/api.php');
-        File::replaceInFile("//Forms\n    Route::get('/".$this->argument('name')."', function() {return view('app\\".$this->argument('name')."');})->name('".$this->argument('name')."');", "//Forms", 'routes/web.php');
-        File::replaceInFile("//Form\nVue.component('".ucfirst($this->argument('name'))."', require('./components/app/".ucfirst($this->argument('name')).".vue').default);", "//Form", 'resources/js/app.js');
+        File::replaceInFile("\nRoute::apiResource('".$this->argument('name')."', \App\Http\Controllers\\".ucfirst($this->argument('name'))."Controller::class);", "", 'routes/api.php');
+        File::replaceInFile("\n    Route::get('/".$this->argument('name')."', function() {return view('app\\".$this->argument('name')."');})->name('".$this->argument('name')."');", "", 'routes/web.php');
+        File::replaceInFile("\nVue.component('".ucfirst($this->argument('name'))."', require('./components/app/".ucfirst($this->argument('name')).".vue').default);", "", 'resources/js/app.js');
         File::replaceInFile("\n<a class='dropdown-item' href='{{route(\"".$this->argument('name')."\")}}'>".ucfirst($this->argument('name'))."</a>", "", 'resources/views/layouts/tabsForm.blade.php');
         $this->warn("Uma linha do \"arquivo resources/views/layouts/tabsForm.blade.php\" Foi removida");
         $this->warn("Uma linha do \"arquivo routes/api.php\" Foi removida");
